@@ -6,6 +6,8 @@ package Service;
 
 import Model.DtoCliente;
 import Model.DtoReserva;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -25,15 +27,14 @@ public class ReservaService {
     public void crearReserva(DtoCliente cliente) {
        System.out.println("Reserva Creada " + cliente);
        cliente.getReserva().setReservaId(java.util.UUID.randomUUID().toString());
+       cliente.getReserva().setEstadoReserva("activa");
        clientes.add(cliente) ;
     }
 
 
     public void cancelarReserva (String noReserva  ){
         System.out.println("Reserva Cancelada " + noReserva);
-        clientes.stream()
-                .filter(dtoCliente -> dtoCliente.getReserva().getReservaId().equals(noReserva))
-                .forEach(dtoCliente -> dtoCliente.getReserva().setEstadoReserva("cancelada"));
+
 
         for (DtoCliente dtoCliente : clientes){
             if (dtoCliente.getReserva().getReservaId().equals(noReserva)) {
@@ -42,14 +43,40 @@ public class ReservaService {
         }
 
     }
-    public void modificarReserva (DtoCliente reserva){
-        System.out.println("Reserva Modificada " + reserva);
+    public void modificarReserva (DtoCliente cliente){
+        System.out.println("Reserva Modificada " + cliente);
+
+        for (DtoCliente dtoCliente : clientes){
+            if (dtoCliente.getReserva().getReservaId().equals(cliente.getReserva().getReservaId())) {
+            dtoCliente.setTelefono(cliente.getTelefono());
+            dtoCliente.setDocumento(cliente.getDocumento());
+            dtoCliente.setCorreo(cliente.getCorreo());
+            dtoCliente.setNombre(cliente.getNombre());
+                DtoReserva reserva = dtoCliente.getReserva();
+                reserva.setFechaReserva(cliente.getReserva().getFechaReserva());
+                reserva.setEstadoReserva("modificado");
+                reserva.setDecoracion(cliente.getReserva().getDecoracion());
+                reserva.setCantidadAcompanantes(cliente.getReserva().getCantidadAcompanantes());
+            }
+        }
         
     }
-    public List<DtoReserva> consultaReserva(String documento, String reserva, Date fecha){
+    public List<DtoCliente> consultaReserva(String documento, String reserva, Date fecha){
         System.out.println("Lista de Reserva " + documento + " " + reserva + " " + fecha);
-        return Collections.emptyList();
-        
+        List<DtoCliente> reservas = new ArrayList<>();
+
+        for (DtoCliente dtoCliente : clientes){
+            if (dtoCliente.getReserva().getReservaId().equals(reserva)) {
+                reservas.add(dtoCliente);
+            } else if (dtoCliente.getReserva().getFechaReserva().equals(fecha)) {
+                reservas.add(dtoCliente);
+            } else if (dtoCliente.getDocumento().equals(documento)) {
+                reservas.add(dtoCliente);
+
+            }
+        }
+
+        return reservas;
     }
 
 }

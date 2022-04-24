@@ -50,13 +50,17 @@ public class RestauranteFinal {
                     break;
 
                 case 3:
+                    System.out.println("Introduzca el numero de reserva a modificar:");
+                    String reservaModificar = scanner.next();
                     DtoCliente clienteModificado = extraerCliente(scanner);
                     if (clienteModificado == null) break;
+                    clienteModificado.getReserva().setReservaId(reservaModificar);
 
                     servicio.modificarReserva(clienteModificado);
 
 
                     break;
+
 
                 case 4:
                     System.out.println("Introduzca el documento del cliente:");
