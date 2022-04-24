@@ -31,7 +31,15 @@ public class ReservaService {
 
     public void cancelarReserva (String noReserva  ){
         System.out.println("Reserva Cancelada " + noReserva);
-        clientes.stream().filter(dtoCliente -> dtoCliente.getReserva().getReservaId().equals(noReserva)).forEach(dtoCliente -> dtoCliente.getReserva().setEstadoReserva("cancelada"));
+        clientes.stream()
+                .filter(dtoCliente -> dtoCliente.getReserva().getReservaId().equals(noReserva))
+                .forEach(dtoCliente -> dtoCliente.getReserva().setEstadoReserva("cancelada"));
+
+        for (DtoCliente dtoCliente : clientes){
+            if (dtoCliente.getReserva().getReservaId().equals(noReserva)) {
+                dtoCliente.getReserva().setEstadoReserva("cancelada");
+            }
+        }
 
     }
     public void modificarReserva (DtoCliente reserva){
