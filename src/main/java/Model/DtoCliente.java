@@ -57,4 +57,14 @@ public class DtoCliente
         this.reserva = reserva;
     }
 
- }
+    @Override
+    public String toString() {
+        return "DtoCliente{" +
+                "documento='" + documento + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", correo='" + correo + '\'' +
+                ", reserva=" + reserva +
+                '}';
+    }
+}

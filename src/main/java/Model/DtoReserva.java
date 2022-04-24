@@ -14,7 +14,7 @@ public class DtoReserva
 {
     private Date fechaReserva;
     private String estadoReserva;
-    private String cantidadAcompanantes;
+    private Integer cantidadAcompanantes;
     private String decoracion; 
 
     public Date getFechaReserva() {
@@ -33,11 +33,11 @@ public class DtoReserva
         this.estadoReserva = estadoReserva;
     }
 
-    public String getCantidadAcompanantes() {
+    public Integer getCantidadAcompanantes() {
         return cantidadAcompanantes;
     }
 
-    public void setCantidadAcompanantes(String cantidadAcompanantes) {
+    public void setCantidadAcompanantes(Integer cantidadAcompanantes) {
         this.cantidadAcompanantes = cantidadAcompanantes;
     }
       
@@ -48,5 +48,14 @@ public class DtoReserva
     public void setDecoracion(String decoracion) {
         this.decoracion = decoracion;
     }
-    
+
+    @Override
+    public String toString() {
+        return "DtoReserva{" +
+                "fechaReserva=" + fechaReserva +
+                ", estadoReserva='" + estadoReserva + '\'' +
+                ", cantidadAcompanantes=" + cantidadAcompanantes +
+                ", decoracion='" + decoracion + '\'' +
+                '}';
+    }
 }

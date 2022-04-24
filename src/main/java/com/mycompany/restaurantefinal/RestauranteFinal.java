@@ -4,11 +4,16 @@
  */
 package com.mycompany.restaurantefinal;
 
+import Model.DtoCliente;
+import Model.DtoReserva;
 import Service.Reservas;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
- *
  * @author shido
  */
 public class RestauranteFinal {
@@ -30,64 +35,50 @@ public class RestauranteFinal {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("Introduzca el documento del cliente:");
-                    String documento = scanner.next();
-                    System.out.println("Introduzca el nombre del cliente:");
-                    String nombre = scanner.next();
-                    System.out.println("Introduzca el telefono del cliente:");
-                    String telefono = scanner.next();
-                    System.out.println("Introduzca el correo del cliente:");
-                    String correo = scanner.next();                    
-                    System.out.println("Introduzca la fecha (YYYY-MM-DD):");
-                    String fecha = scanner.next();
-                    System.out.println("Introduzca la hora (HH:MM):");
-                    
-                    System.out.println("Introduzca la cantidad de acompañantes");
-                    Integer acompanantes = scanner.nextInt();
-                    System.out.println("Introdusca decoracion");
-                    String decocarion = scanner.next();
+                    DtoCliente cliente = extraerCliente(scanner);
+                    if (cliente == null) break;
 
-                    servicio.crearReserva(null);
+                    servicio.crearReserva (cliente);
 
                     break;
                 case 2:
-                    System.out.println("Introduzca la reserva");
+                    System.out.println("Introduzca el número de reserva");
                     Integer reservaId = scanner.nextInt();
                     servicio.cancelarReserva(reservaId);
-                    
-                    
+
+
                     break;
 
                 case 3:
+                    DtoCliente clienteModificado = extraerCliente(scanner);
+                    if (clienteModificado == null) break;
 
-                    Cliente cliente = new Cliente();
-                    cliente.setNombre(nombre);
-                    cliente.setTelefono(telefono);
+                    servicio.modificarReserva(clienteModificado);
 
-                    Mesa mesaElegida = null;
-                    for (Mesa mesa : Restaurante.getInstancia().getMesas()) {
-                        if (mesa.getIdMesa().equals(mesaId)) {
-                            mesaElegida = mesa;
-                            break;
-                        }
-                    }
-
-                    if (mesaElegida == null) {
-                        System.err.println("La mesa no existe");
-                        break;
-                    }
-
-                    LocalDateTime fechaYHora = LocalDateTime.parse(fecha + "T" + hora + ":00");
-
-                    Reserva reserva = new Reserva();
-                    reserva.setCliente(cliente);
-                    reserva.setMesa(mesaElegida);
-                    reserva.setFecha(fechaYHora);
-                    reserva.getMesa().setReservada(true);
-
-                    Restaurante.getInstancia().getReservas().add(reserva);
 
                     break;
+
+                case 4:
+                    System.out.println("Introduzca el documento del cliente:");
+                    String documento = scanner.next();
+                    System.out.println("Introduzca el numero de reserva:");
+                    String reserva = scanner.next();
+                    System.out.println("Introduzca la fecha (YYYY-MM-DD):");
+                    String fecha = scanner.next();
+                    System.out.println("Introduzca la hora (HH:MM):");
+                    String hora = scanner.next();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    Date fechaReserva = null;
+
+                    try {
+                        fechaReserva = dateFormat.parse(fecha + " " + hora);
+                    } catch (ParseException e) {
+                        System.out.println("El formato de fecha es incorrecto." + fecha + " " + hora);
+                       break;
+                    }
+                    servicio.consultaReserva(documento, reserva, fechaReserva);
+                    break;
+
                 case 99:
                     System.exit(0);
                 default:
@@ -96,6 +87,48 @@ public class RestauranteFinal {
 
         }
 
+    }
+
+    private static DtoCliente extraerCliente(Scanner scanner) {
+        System.out.println("Introduzca el documento del cliente:");
+        String documento = scanner.next();
+        System.out.println("Introduzca el nombre del cliente:");
+        String nombre = scanner.next();
+        System.out.println("Introduzca el teléfono del cliente:");
+        String telefono = scanner.next();
+        System.out.println("Introduzca el correo del cliente:");
+        String correo = scanner.next();
+        System.out.println("Introduzca la fecha (YYYY-MM-DD):");
+        String fecha = scanner.next();
+        System.out.println("Introduzca la hora (HH:MM):");
+        String hora = scanner.next();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        Date fechaReserva = null;
+        try {
+            fechaReserva = dateFormat.parse(fecha + " " + hora);
+        } catch (ParseException e) {
+            System.out.println("El formato de fecha es incorrecto." + fecha + " " + hora);
+            return null;
+        }
+
+        System.out.println("Introduzca la cantidad de acompañantes");
+        Integer acompanantes = scanner.nextInt();
+        System.out.println("Introduzca decoración");
+        String decoracion = scanner.next();
+        DtoReserva reserva = new DtoReserva();
+        reserva.setEstadoReserva("creado");
+        reserva.setDecoracion(decoracion);
+        reserva.setCantidadAcompanantes(acompanantes);
+        reserva.setFechaReserva(fechaReserva);
+
+        DtoCliente cliente = new DtoCliente();
+        cliente.setReserva(reserva);
+        cliente.setCorreo(correo);
+        cliente.setNombre(nombre);
+        cliente.setTelefono(telefono);
+        cliente.setDocumento(documento);
+        return cliente;
     }
 
 }
