@@ -15,7 +15,9 @@ public class DtoReserva
     private Date fechaReserva;
     private String estadoReserva;
     private Integer cantidadAcompanantes;
-    private String decoracion; 
+    private String decoracion;
+
+    private String reservaId;
 
     public Date getFechaReserva() {
         return fechaReserva;
@@ -47,6 +49,14 @@ public class DtoReserva
 
     public void setDecoracion(String decoracion) {
         this.decoracion = decoracion;
+    }
+
+    public String getReservaId() {
+        return reservaId;
+    }
+
+    public void setReservaId(String reservaId) {
+        this.reservaId = reservaId;
     }
 
     @Override

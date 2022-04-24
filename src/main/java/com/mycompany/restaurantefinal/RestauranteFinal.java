@@ -6,7 +6,7 @@ package com.mycompany.restaurantefinal;
 
 import Model.DtoCliente;
 import Model.DtoReserva;
-import Service.Reservas;
+import Service.ReservaService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class RestauranteFinal {
 
     public static void main(String[] args) {
-        Reservas servicio = new Reservas();
+        ReservaService servicio = new ReservaService();
         while (true) {
             System.out.println("Bienvenido a Restaurante!");
             System.out.println();
@@ -43,7 +43,7 @@ public class RestauranteFinal {
                     break;
                 case 2:
                     System.out.println("Introduzca el número de reserva");
-                    Integer reservaId = scanner.nextInt();
+                    String reservaId = scanner.next();
                     servicio.cancelarReserva(reservaId);
 
 

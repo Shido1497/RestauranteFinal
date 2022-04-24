@@ -14,14 +14,25 @@ import java.util.List;
  *
  * @author shido
  */
-public class Reservas {
+public class ReservaService {
+
+    private List<DtoCliente> clientes;
+
+    public ReservaService() {
+        clientes = Collections.emptyList();
+    }
 
     public void crearReserva(DtoCliente cliente) {
        System.out.println("Reserva Creada " + cliente);
-        
+       cliente.getReserva().setReservaId(java.util.UUID.randomUUID().toString());
+       clientes.add(cliente) ;
     }
-    public void cancelarReserva (int noReserva  ){
+
+
+    public void cancelarReserva (String noReserva  ){
         System.out.println("Reserva Cancelada " + noReserva);
+        clientes.stream().filter(dtoCliente -> dtoCliente.getReserva().getReservaId().equals(noReserva)).forEach(dtoCliente -> dtoCliente.getReserva().setEstadoReserva("cancelada"));
+
     }
     public void modificarReserva (DtoCliente reserva){
         System.out.println("Reserva Modificada " + reserva);
