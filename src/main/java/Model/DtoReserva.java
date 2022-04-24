@@ -66,6 +66,7 @@ public class DtoReserva
                 ", estadoReserva='" + estadoReserva + '\'' +
                 ", cantidadAcompanantes=" + cantidadAcompanantes +
                 ", decoracion='" + decoracion + '\'' +
+                ", reservaId='" + reservaId + '\'' +
                 '}';
     }
 }

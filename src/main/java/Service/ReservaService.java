@@ -21,14 +21,14 @@ public class ReservaService {
     private List<DtoCliente> clientes;
 
     public ReservaService() {
-        clientes = Collections.emptyList();
+        clientes = new ArrayList<>();
     }
 
     public void crearReserva(DtoCliente cliente) {
-       System.out.println("Reserva Creada " + cliente);
        cliente.getReserva().setReservaId(java.util.UUID.randomUUID().toString());
        cliente.getReserva().setEstadoReserva("activa");
        clientes.add(cliente) ;
+       System.out.println("Reserva Creada " + cliente);
     }
 
 
