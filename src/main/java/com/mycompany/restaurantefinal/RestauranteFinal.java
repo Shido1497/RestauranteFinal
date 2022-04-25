@@ -16,6 +16,11 @@ import java.util.Scanner;
 /**
  * @author shido
  */
+
+/** Codigo desarrollado por:
+ * Daniel Zapata Muñoz cc: 1042706584
+ * Aida Lisseth Betancur López cc: 1039458783
+ */
 public class RestauranteFinal {
 
     public static void main(String[] args) {
